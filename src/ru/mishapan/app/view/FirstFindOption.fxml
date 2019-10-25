@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="850.0" style="-fx-background-color: #202020;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mishapan.app.view.FirstFindOptionController">
+   <children>
+      <BorderPane prefHeight="36.0" prefWidth="850.0">
+         <top>
+            <MenuBar prefHeight="35.0" prefWidth="850.0" style="-fx-background-color: #181818;" BorderPane.alignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </top>
+      </BorderPane>
+      <TextField fx:id="pathTextField" layoutX="50.0" layoutY="147.0" onAction="#getPathTextField" prefHeight="26.0" prefWidth="431.0" />
+      <Label layoutX="50.0" layoutY="123.0" style="-fx-text-fill: #afafaf;" text="Print a path to folder" textFill="#f2f2f2">
+         <font>
+            <Font name="Century Gothic" size="19.0" />
+         </font>
+      </Label>
+      <TextField layoutX="50.0" layoutY="223.0" prefHeight="0.0" prefWidth="431.0" text="log" />
+      <Label layoutX="50.0" layoutY="199.0" style="-fx-text-fill: #afafaf;" text="Print a file extension" textFill="#f2f2f2">
+         <font>
+            <Font name="Century Gothic" size="19.0" />
+         </font>
+      </Label>
+      <TextField layoutX="50.0" layoutY="300.0" prefHeight="210.0" prefWidth="431.0" />
+      <Label layoutX="50.0" layoutY="276.0" style="-fx-text-fill: #afafaf;" text="Print text to search" textFill="#f2f2f2">
+         <font>
+            <Font name="Century Gothic" size="19.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
