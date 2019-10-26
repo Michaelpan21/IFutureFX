@@ -2,13 +2,18 @@ package ru.mishapan.app;
 
 
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ru.mishapan.app.model.file.FileFinder;
+import ru.mishapan.app.view.FirstFindOptionController;
+import ru.mishapan.app.view.FirstResultController;
 import ru.mishapan.app.view.StartScreenController;
 
 public class MainApp extends Application {
@@ -21,9 +26,7 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("IFuture Text Finder");
 
-        //initRootLayout();
         showStartScreen();
-
     }
 
     /**
@@ -45,9 +48,6 @@ public class MainApp extends Application {
         }
     }
 
-    /**
-     * Показывает в корневом макете сведения об адресатах.
-     */
     public void showStartScreen() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -79,6 +79,46 @@ public class MainApp extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
+            FirstFindOptionController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void showFileFinderByPathResultScreen(String path, String glob, String text) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/FirstFindOptionResult.fxml"));
+            AnchorPane anchorPane = loader.load();
+
+            Stage resultStage = new Stage();
+            resultStage.setTitle("Finding results");
+            resultStage.initModality(Modality.WINDOW_MODAL);
+            resultStage.initOwner(primaryStage);
+
+            Scene scene = new Scene(anchorPane);
+            resultStage.setScene(scene);
+
+
+            FileFinder fileFinder = new FileFinder();
+
+            StringBuilder sb = new StringBuilder();
+
+            fileFinder.findTextInFiles(fileFinder.findFiles(Paths.get(path), glob), text).forEach(
+                    path1 -> {
+                        sb.append(path1.getFileName());
+                        sb.append("\n");
+                    }
+            );
+
+            FirstResultController controller = loader.getController();
+            controller.setTextFlow(sb.toString());
+
+            resultStage.showAndWait();
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -101,11 +141,6 @@ public class MainApp extends Application {
         }
     }
 
-    /**
-     * Возвращает главную сцену.
-     *
-     * @return
-     */
     public Stage getPrimaryStage() {
         return primaryStage;
     }

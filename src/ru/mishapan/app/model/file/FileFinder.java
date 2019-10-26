@@ -103,10 +103,13 @@ public class FileFinder {
         FileFinder files = new FileFinder();
         Path path = FileSystems.getDefault().getPath("C:/Users/Михаил/Desktop/findMe");
 
-        String text = "Error 404: Server not found";
-        List<Path> st = files.findTextInFiles(files.findFiles(path, "*.*"), text);
+        //String text = "Error 404: Server not found";
+       // List<Path> st = files.findTextInFiles(files.findFiles(path, "*.*"), text);
 
-        st.forEach(System.out::println);
+        List<Path> list = files.findFiles(path, "*.log");
+        list.forEach(System.out::println);
+
+        //st.forEach(System.out::println);
 
     }
 
