@@ -1,4 +1,4 @@
-package ru.mishapan.app.view;
+package ru.mishapan.app.view.firstBranch;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -25,7 +25,7 @@ public class FirstResultController {
     public void setTextFlow(String text) {
         Text text1 = new Text(text);
         text1.setFill(Color.rgb(255, 255, 255));
-        text1.setFont(Font.font("System", 12));
+        text1.setFont(Font.font("System", 14));
         filesFlow.setPadding(new Insets(0, 0, 0, 6));
         filesFlow.getChildren().add(text1);
     }
@@ -33,7 +33,7 @@ public class FirstResultController {
     public void setTreeFlow(String text) {
         Text text1 = new Text(text);
         text1.setFill(Color.rgb(255, 255, 255));
-        text1.setFont(Font.font("System", 12));
+        text1.setFont(Font.font("System", 14));
         treeFlow.setPadding(new Insets(0, 0, 0, 6));
         treeFlow.getChildren().add(text1);
     }

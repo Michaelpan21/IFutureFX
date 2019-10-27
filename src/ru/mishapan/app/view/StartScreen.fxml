@@ -8,12 +8,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="706.0" style="-fx-background-color: #202020;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mishapan.app.view.StartScreenController">
    <children>
-      <Button layoutX="1.0" layoutY="181.0" mnemonicParsing="false" onAction="#handleLeftButton" prefHeight="287.0" prefWidth="346.0" style="-fx-background-color: #282828; -fx-text-fill: #5A5A5A;" text="I know a path to folder">
+      <Button fx:id="leftButton" layoutX="1.0" layoutY="181.0" mnemonicParsing="false" onAction="#handleLeftButton" onMouseEntered="#onMouseEnteredLeftButton" onMouseExited="#onMouseExitedLeftButton" prefHeight="287.0" prefWidth="347.0" style="-fx-background-color: #282828; -fx-text-fill: #5A5A5A;" text="I know a path to folder">
          <font>
             <Font name="Century Gothic" size="22.0" />
          </font>
       </Button>
-      <Button layoutX="347.0" layoutY="181.0" mnemonicParsing="false" onAction="#handleRightButton" prefHeight="287.0" prefWidth="358.0" style="-fx-background-color: #282828; -fx-text-fill: #5A5A5A;" text="I know only a folder name">
+      <Button fx:id="rightButton" layoutX="348.0" layoutY="181.0" mnemonicParsing="false" onAction="#handleRightButton" onMouseEntered="#onMouseEnteredRightButton" onMouseExited="#onMouseExitedRightButton" prefHeight="287.0" prefWidth="357.0" style="-fx-background-color: #282828; -fx-text-fill: #5A5A5A;" text="I know only a folder name">
          <font>
             <Font name="Century Gothic" size="22.0" />
          </font>
@@ -24,7 +24,6 @@
          </font>
       </Label>
       <Label layoutX="7.0" layoutY="163.0" text="choose option:" textFill="#e5e1e1" />
-      <Line endX="600.3999633789062" layoutX="105.0" layoutY="181.0" startX="-103.99998474121094" />
-      <Line endX="-6.0" endY="286.1999816894531" layoutX="353.0" layoutY="182.0" startX="-5.60003662109375" startY="-1.0" />
+      <Line endX="600.3999633789062" fill="#ffa600" layoutX="105.0" layoutY="181.0" startX="-103.99998474121094" stroke="#ffa72d" />
    </children>
 </AnchorPane>

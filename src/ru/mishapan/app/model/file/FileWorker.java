@@ -3,44 +3,36 @@ package ru.mishapan.app.model.file;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.DirectoryIteratorException;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-/*TODO
-1) кодировка
- */
-public class FileFinder {
+public class FileWorker {
 
-    public List<Path> findFiles(Path path, String glob) {
-
-        if (path == null) {
-            throw new NullPointerException();
-        }
+    public List<Path> findFiles(Path path, String glob) throws IOException {
 
         if (glob == null) {
-            glob = "*.log";
+            glob = "*.*";
         }
 
         List<Path> filesList = new ArrayList<>();
 
-        try {
-            Iterable<Path> stream = Files.newDirectoryStream(path, glob);
-            stream.forEach(filesList::add);
-
-        } catch (IOException | DirectoryIteratorException ex) {
-            ex.printStackTrace();
-        }
+        Iterable<Path> stream = Files.newDirectoryStream(path, glob);
+        stream.forEach(filesList::add);
 
         return filesList;
     }
 
     public List<Path> findTextInFiles(List<Path> filesList, String text) {
 
-        if (filesList.size() == 0) throw new IllegalArgumentException("No files to search");
+        if (filesList.size() == 0) {
+            throw new IllegalArgumentException("No satisfying files in current directory!");
+        }
+
+        if (text.equals("")) {
+            return filesList;
+        }
 
         char[] textChars = text.toCharArray();
 
@@ -60,6 +52,13 @@ public class FileFinder {
 
                         if (fileChars[i] == textChars[itr]) {
 
+                            if (textChars.length == 1) {
+                                if (i != fileChars.length - 1 && isEndOfTheWord(fileChars[i + 1])) {
+                                    toAdd = true;
+                                }
+                                break;
+                            }
+
                             itr++;
                             for (int j = i + 1; j < fileChars.length; j++) {
 
@@ -69,9 +68,11 @@ public class FileFinder {
                                 }
 
                                 if (itr == textChars.length - 1) {
+                                    if (j != fileChars.length - 1 && isEndOfTheWord(fileChars[j + 1])) {
+                                        toAdd = true;
+                                    }
                                     i = fileChars.length - 1;
                                     itr = 0;
-                                    toAdd = true;
                                     break;
                                 }
 
@@ -90,7 +91,7 @@ public class FileFinder {
                     filesWithMatches.add(path);
                 }
 
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         });
@@ -98,20 +99,9 @@ public class FileFinder {
         return filesWithMatches;
     }
 
-    public static void main(String[] args) {
-
-        FileFinder files = new FileFinder();
-        Path path = FileSystems.getDefault().getPath("C:/Users/Михаил/Desktop/findMe");
-
-        //String text = "Error 404: Server not found";
-       // List<Path> st = files.findTextInFiles(files.findFiles(path, "*.*"), text);
-
-        List<Path> list = files.findFiles(path, "*.log");
-        list.forEach(System.out::println);
-
-        //st.forEach(System.out::println);
-
+    private boolean isEndOfTheWord(char symbol) {
+        if (symbol == ' ') return true;
+        String symbols = ".,/?<>;:'[]{}~`@#$%^&*()-_+=\\|*\"№!\n";
+        return symbols.contains(Character.toString(symbol));
     }
-
-
 }
