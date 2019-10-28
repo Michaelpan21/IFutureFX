@@ -16,13 +16,13 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#151515" height="36.0" layoutX="9.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="105.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#151515" height="130.0" layoutX="-11.0" layoutY="453.0" stroke="TRANSPARENT" strokeType="INSIDE" width="843.0" />
       <TextField fx:id="pathTextField" layoutX="45.0" layoutY="113.0" onMouseEntered="#onMouseEnteredTextField1" onMouseExited="#onMouseExitedTextField1" prefHeight="26.0" prefWidth="431.0" style="-fx-background-color: #535353; -fx-text-fill: #cccccc;" />
-      <Label layoutX="45.0" layoutY="89.0" style="-fx-text-fill: #afafaf;" text="Enter a path to folder" textFill="WHITE">
+      <Label layoutX="45.0" layoutY="89.0" style="-fx-text-fill: #afafaf;" text="Enter path to folder" textFill="WHITE">
          <font>
             <Font name="Century Gothic" size="19.0" />
          </font>
       </Label>
       <TextField fx:id="fileExtensionFiend" layoutX="45.0" layoutY="189.0" onMouseEntered="#onMouseEnteredTextField2" onMouseExited="#onMouseExitedTextField2" prefHeight="0.0" prefWidth="431.0" style="-fx-background-color: #535353; -fx-text-fill: #cccccc;" text="log" AnchorPane.topAnchor="189.0" />
-      <Label layoutX="45.0" layoutY="165.0" style="-fx-text-fill: #afafaf;" text="Enter a file extension" textFill="#f2f2f2">
+      <Label layoutX="45.0" layoutY="165.0" style="-fx-text-fill: #afafaf;" text="Enter file extension" textFill="#f2f2f2">
          <font>
             <Font name="Century Gothic" size="19.0" />
          </font>

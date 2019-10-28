@@ -1,14 +1,14 @@
 package ru.mishapan.app.model.directory;
 
-import ru.mishapan.app.model.file.FileWorker;
-
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Ищет папки с заданным именем.
+ */
 public class FolderFinder extends SimpleFileVisitor<Path> {
 
     private List<Path> pathList;
@@ -30,6 +30,15 @@ public class FolderFinder extends SimpleFileVisitor<Path> {
         return folderName;
     }
 
+    /**
+     * Ищет папаки с заданным именнем, начиная с начальной дирертории.
+     *
+     * @param folderName название папки, которую надо найти
+     * @param startDir   начальная директория, откуда начнется поиск
+     * @param visitor    объект класса реализующего интерфейс FileVisitor<Path>.
+     * @return список ArrayList<Path>, содержащий пути найденных папок
+     * @throws IOException
+     */
     public List<Path> findFolders(String folderName, Path startDir, FileVisitor<Path> visitor) throws IOException {
 
         setFolderName(folderName);
@@ -50,7 +59,8 @@ public class FolderFinder extends SimpleFileVisitor<Path> {
             if (Files.isHidden(file) || !Files.isReadable(file) || !Files.isWritable(file)) {
                 return FileVisitResult.SKIP_SUBTREE;
             }
-        } catch (IOException ex) { ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
         return FileVisitResult.SKIP_SUBTREE;
     }

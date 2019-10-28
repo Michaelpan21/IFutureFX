@@ -1,11 +1,6 @@
 package ru.mishapan.app;
 
 
-import java.io.IOException;
-import java.nio.file.FileVisitor;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,12 +11,18 @@ import javafx.stage.Stage;
 import ru.mishapan.app.model.directory.DirectoryTreeCreator;
 import ru.mishapan.app.model.directory.FolderFinder;
 import ru.mishapan.app.model.file.FileWorker;
+import ru.mishapan.app.view.StartScreenController;
 import ru.mishapan.app.view.firstBranch.FirstFindOptionController;
 import ru.mishapan.app.view.firstBranch.FirstResultController;
-import ru.mishapan.app.view.StartScreenController;
 import ru.mishapan.app.view.secondBranch.SecondFindOptionController;
 import ru.mishapan.app.view.secondBranch.SecondResultController;
 
+import java.io.IOException;
+import java.nio.file.Paths;
+
+/**
+ * Главный класс приложения
+ */
 public class MainApp extends Application {
 
     private Stage primaryStage;
@@ -34,6 +35,9 @@ public class MainApp extends Application {
         showStartScreen();
     }
 
+    /**
+     * Показывает главный экран
+     */
     public void showStartScreen() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -53,6 +57,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Показывает экран поиска при известном пути
+     */
     public void showFileFinderByPathScreen() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -72,7 +79,15 @@ public class MainApp extends Application {
         }
     }
 
-    public void showFileFinderByPathResultScreen(String path, String glob, String text) {
+    /**
+     * Производит поиск файлов по заданному пути, затем поиск среди этих файлов файлов с заданным текстом
+     * Показывает экран результата поиска при известном пути
+     *
+     * @param path      путь к папке, в которой будет производится поиск файлов с заданным расширением
+     * @param extension расширение
+     * @param text      текст поиска
+     */
+    public void showFileFinderByPathResultScreen(String path, String extension, String text) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/firstBranch/FirstFindOptionResult.fxml"));
@@ -91,7 +106,7 @@ public class MainApp extends Application {
             StringBuilder sb = new StringBuilder();
 
             try {
-                fileWorker.findTextInFiles(fileWorker.findFiles(Paths.get(path), glob), text).forEach(
+                fileWorker.findTextInFiles(fileWorker.findFiles(Paths.get(path), extension), text).forEach(
                         path1 -> {
                             sb.append(path1.getFileName());
                             sb.append("\n");
@@ -117,6 +132,7 @@ public class MainApp extends Application {
                 if (count == folders.length) {
                     break;
                 }
+
                 sb1.append("\n").append("   ".repeat(count));
                 count++;
             }
@@ -128,10 +144,13 @@ public class MainApp extends Application {
             resultStage.showAndWait();
 
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
     }
 
+    /**
+     * Показывает экран поиска при известном имени папки
+     */
     public void showFileFinderByFolderScreen() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -151,23 +170,37 @@ public class MainApp extends Application {
         }
     }
 
-    public void showFileFinderByFolderResultScreen(String folderName, String startDir, String glob, String text) {
+    /**
+     * Производит поиск папок, с заданным именем, затем для каждого из путей:
+     * производит поиск файлов по заданному пути, затем поиск среди этих файлов файлов с заданным текстом
+     * Показывает экран результата поиска при известном пути.
+     *
+     * @param folderName имя папки
+     * @param startDir   начальная директория
+     * @param extension  расширение
+     * @param text       текст поиска
+     */
+    public void showFileFinderByFolderResultScreen(String folderName, String startDir, String extension, String text) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/secondBranch/SecondFindOptionResult.fxml"));
-            AnchorPane anchorPane = loader.load();
+            loader.setLocation(MainApp.class.getResource("view/LoadingScreen.fxml"));
+            AnchorPane loadingPane = loader.load();
 
-            Stage resultStage = new Stage();
-            resultStage.setTitle("Finding results");
-            resultStage.initModality(Modality.WINDOW_MODAL);
-            resultStage.initOwner(primaryStage);
+            Stage loadingStage = new Stage();
+            loadingStage.setTitle("Finding results");
+            loadingStage.initModality(Modality.WINDOW_MODAL);
+            loadingStage.initOwner(primaryStage);
 
-            Scene scene = new Scene(anchorPane);
-            resultStage.setScene(scene);
+            Scene scene = new Scene(loadingPane);
+            loadingStage.setScene(scene);
+            loadingStage.show();
 
+            FXMLLoader loader2 = new FXMLLoader();
+            loader2.setLocation(MainApp.class.getResource("view/secondBranch/SecondFindOptionResult.fxml"));
+            AnchorPane anchorPane = loader2.load();
 
             FileWorker fileWorker = new FileWorker();
-            SecondResultController controller = loader.getController();
+            SecondResultController controller = loader2.getController();
 
             try {
                 FolderFinder folderFinder = new FolderFinder();
@@ -176,7 +209,7 @@ public class MainApp extends Application {
                     StringBuilder sb = new StringBuilder();
 
                     try {
-                        fileWorker.findTextInFiles(fileWorker.findFiles(path, glob), text).forEach(
+                        fileWorker.findTextInFiles(fileWorker.findFiles(path, extension), text).forEach(
                                 path1 -> {
                                     sb.append(path1.getFileName());
                                     sb.append("\n");
@@ -193,6 +226,7 @@ public class MainApp extends Application {
                             if (count == folders.length) {
                                 break;
                             }
+
                             sb1.append("\n").append("   ".repeat(count));
                             count++;
                         }
@@ -212,10 +246,19 @@ public class MainApp extends Application {
                 return;
             }
 
+            loadingStage.close();
+
+            Stage resultStage = new Stage();
+            resultStage.setTitle("Finding results");
+            resultStage.initModality(Modality.WINDOW_MODAL);
+            resultStage.initOwner(primaryStage);
+
+            Scene scene1 = new Scene(anchorPane);
+            resultStage.setScene(scene1);
             resultStage.showAndWait();
 
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
     }
 

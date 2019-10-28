@@ -5,6 +5,9 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.Bloom;
 import ru.mishapan.app.MainApp;
 
+/**
+ * контроллер, описывающий начальный экран
+ */
 public class StartScreenController {
 
     public StartScreenController() {
@@ -21,11 +24,17 @@ public class StartScreenController {
         this.mainApp = mainApp;
     }
 
+    /**
+     * обраточкик кнопки "поиск, если известен путь"
+     */
     @FXML
     private void handleLeftButton() {
         mainApp.showFileFinderByPathScreen();
     }
 
+    /**
+     * обраточкик кнопки "поиск, если известенно только имя папки"
+     */
     @FXML
     private void handleRightButton() {
         mainApp.showFileFinderByFolderScreen();

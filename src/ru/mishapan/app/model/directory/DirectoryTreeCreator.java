@@ -5,8 +5,17 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 
+/**
+ * Создает дерево папок
+ */
 public class DirectoryTreeCreator {
 
+    /**
+     * Разделяет заданный путь на отдельный папки.
+     *
+     * @param path путь к папке
+     * @return массив строк, содержащий папки, начиная с корневой
+     */
     public String[] createTree(Path path) {
 
         if (Files.notExists(path, LinkOption.NOFOLLOW_LINKS)) {

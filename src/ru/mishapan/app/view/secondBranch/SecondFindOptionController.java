@@ -5,6 +5,9 @@ import javafx.scene.control.*;
 import javafx.scene.effect.Bloom;
 import ru.mishapan.app.MainApp;
 
+/**
+ * контроллер, описывающий экран поиска, если известено имя папки
+ */
 public class SecondFindOptionController {
 
     public SecondFindOptionController() {
@@ -101,6 +104,16 @@ public class SecondFindOptionController {
     }
 
     @FXML
+    private void onMouseEnteredTextField3() {
+        fileExtensionFiend.setStyle("-fx-background-color: #313131; -fx-text-fill: #ffffff");
+    }
+
+    @FXML
+    private void onMouseExitedTextField3() {
+        fileExtensionFiend.setStyle("-fx-background-color: #535353; -fx-text-fill: #cccccc");
+    }
+
+    @FXML
     private void onMouseEnteredButton() {
         Bloom bloom = new Bloom();
         searchButton.setEffect(bloom);
@@ -122,10 +135,14 @@ public class SecondFindOptionController {
         backButton.setEffect(null);
     }
 
+    /**
+     * При нажатие на кнопку поиск, производится проверка полей имени папки и начальной директории на пустоту,
+     * затем запускается новая сцена с результатами поиска
+     */
     @FXML
     private void buttonSearchHandler() {
 
-        if (getFolderNameTextField().equals("") || getDirectoryTextField().equals("")) {
+        if (getFolderNameTextField().equals("") && getDirectoryTextField().equals("")) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning Alert");
             alert.setHeaderText(null);

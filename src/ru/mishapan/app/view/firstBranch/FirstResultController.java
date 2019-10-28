@@ -7,6 +7,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
+/**
+ * Описывает экран вывода результатов поиска
+ */
 public class FirstResultController {
 
     @FXML

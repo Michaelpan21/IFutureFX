@@ -8,22 +8,42 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс для работы с файлами
+ */
 public class FileWorker {
 
-    public List<Path> findFiles(Path path, String glob) throws IOException {
+    /**
+     * Ищет файлы с указанным расширением в указанной директории.
+     * Если совпадений не найдено, возвращается пустой список.
+     *
+     * @param path      путь к директории, где будет происходить поиск файлов с указанным разширением
+     * @param extension разширение файла
+     * @return возвращает список типа ArrayList<Path>, содержащий пути найденных файлов
+     * @throws IOException при неверно указанном(несуществующем) пути, невозможности ооздать поток
+     */
+    public List<Path> findFiles(Path path, String extension) throws IOException {
 
-        if (glob == null) {
-            glob = "*.*";
+        if (extension == null) {
+            extension = "*.*";
         }
 
         List<Path> filesList = new ArrayList<>();
 
-        Iterable<Path> stream = Files.newDirectoryStream(path, glob);
+        Iterable<Path> stream = Files.newDirectoryStream(path, extension);
         stream.forEach(filesList::add);
 
         return filesList;
     }
 
+    /**
+     * Ищет указанный текст в указанных файлах, если текст не указан, возвращается исходный список.
+     * Если совпадений не найдено, возвращается пустой список.
+     *
+     * @param filesList список List<Path>, содержаший пути к файлам
+     * @param text      текст, который необходимо найти
+     * @return список List<Path>, содержаший пути к файлам, в которых найден заданный текст
+     */
     public List<Path> findTextInFiles(List<Path> filesList, String text) {
 
         if (filesList.size() == 0) {
@@ -99,6 +119,12 @@ public class FileWorker {
         return filesWithMatches;
     }
 
+    /**
+     * Проверяется является ли символ разделителем между словами.
+     *
+     * @param symbol символ
+     * @return true, если является.
+     */
     private boolean isEndOfTheWord(char symbol) {
         if (symbol == ' ') return true;
         String symbols = ".,/?<>;:'[]{}~`@#$%^&*()-_+=\\|*\"№!\n";

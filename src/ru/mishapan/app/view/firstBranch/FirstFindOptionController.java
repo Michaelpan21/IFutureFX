@@ -10,6 +10,9 @@ import ru.mishapan.app.MainApp;
 
 public class FirstFindOptionController {
 
+    /**
+     * контроллер, описывающий экран поиска, если известен путь
+     */
     public FirstFindOptionController() {
     }
 
@@ -92,6 +95,10 @@ public class FirstFindOptionController {
         backButton.setEffect(null);
     }
 
+    /**
+     * При нажатие на кнопку поиск, производится проверка поля путь на пустоту, затем запускается новая сцена
+     * с результатами поиска
+     */
     @FXML
     private void buttonSearchHandler() {
 
