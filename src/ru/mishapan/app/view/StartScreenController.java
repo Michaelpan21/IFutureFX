@@ -14,9 +14,7 @@ public class StartScreenController {
     }
 
     @FXML
-    Button leftButton;
-    @FXML
-    Button rightButton;
+    Button GetStartedButton;
 
     private MainApp mainApp;
 
@@ -24,45 +22,22 @@ public class StartScreenController {
         this.mainApp = mainApp;
     }
 
-    /**
-     * обраточкик кнопки "поиск, если известен путь"
-     */
     @FXML
-    private void handleLeftButton() {
-        mainApp.showFileFinderByPathScreen();
-    }
-
-    /**
-     * обраточкик кнопки "поиск, если известенно только имя папки"
-     */
-    @FXML
-    private void handleRightButton() {
-        mainApp.showFileFinderByFolderScreen();
+    private void handleGetStartedButton() {
+        mainApp.showSearchSettingsScreen();
     }
 
     @FXML
     private void onMouseEnteredLeftButton() {
         Bloom bloom = new Bloom();
-        leftButton.setEffect(bloom);
-        leftButton.setStyle("-fx-background-color: #232323; -fx-text-fill: #ffffff");
-    }
-
-    @FXML
-    private void onMouseEnteredRightButton() {
-        Bloom bloom = new Bloom();
-        rightButton.setEffect(bloom);
-        rightButton.setStyle("-fx-background-color: #232323; -fx-text-fill: #ffffff");
+        GetStartedButton.setEffect(bloom);
+        GetStartedButton.setStyle("-fx-background-color: #232323; -fx-text-fill: #ffffff");
     }
 
     @FXML
     private void onMouseExitedLeftButton() {
-        leftButton.setEffect(null);
-        leftButton.setStyle("-fx-background-color: #282828; -fx-text-fill: #5A5A5A");
+        GetStartedButton.setEffect(null);
+        GetStartedButton.setStyle("-fx-background-color: #282828; -fx-text-fill: #5A5A5A");
     }
 
-    @FXML
-    private void onMouseExitedRightButton() {
-        rightButton.setEffect(null);
-        rightButton.setStyle("-fx-background-color: #282828; -fx-text-fill: #5A5A5A");
-    }
 }

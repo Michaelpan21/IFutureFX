@@ -11,11 +11,11 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="850.0" style="-fx-background-color: #202020;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mishapan.app.view.firstBranch.FirstFindOptionController">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" style="-fx-background-color: #202020;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mishapan.app.view.search.SearchSettingsController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#151515" height="36.0" layoutX="9.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="105.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#151515" height="130.0" layoutX="-11.0" layoutY="453.0" stroke="TRANSPARENT" strokeType="INSIDE" width="843.0" />
-      <TextField fx:id="pathTextField" layoutX="45.0" layoutY="113.0" onMouseEntered="#onMouseEnteredTextField1" onMouseExited="#onMouseExitedTextField1" prefHeight="26.0" prefWidth="431.0" style="-fx-background-color: #535353; -fx-text-fill: #cccccc;" />
+      <TextField fx:id="pathTextField" layoutX="45.0" layoutY="113.0" onMouseEntered="#onMouseEnteredTextField1" onMouseExited="#onMouseExitedTextField1" prefHeight="26.0" prefWidth="339.0" style="-fx-background-color: #535353; -fx-text-fill: #cccccc;" />
       <Label layoutX="45.0" layoutY="89.0" style="-fx-text-fill: #afafaf;" text="Enter path to folder" textFill="WHITE">
          <font>
             <Font name="Century Gothic" size="19.0" />
@@ -66,5 +66,10 @@
       <Line endX="-15.0" endY="3.814697265625E-6" layoutX="160.0" layoutY="31.0" startX="-36.0000114440918" stroke="#ff8b00" />
       <Line endX="-33.0" endY="3.814697265625E-6" layoutX="187.0" layoutY="31.0" startX="-25.0" startY="3.814697265625E-6" stroke="#ff8b00" />
       <Line endX="183.0" layoutX="648.0" layoutY="453.0" startX="-36.0000114440918" stroke="#ff8b00" />
+      <Button fx:id="directoryButton" layoutX="381.0" layoutY="112.0" mnemonicParsing="false" onAction="#directoryButtonHandler" onMouseEntered="#onMouseEnteredDirectoryButton" onMouseExited="#onMouseExitedDirectoryButton" prefHeight="26.0" prefWidth="94.0" style="-fx-background-color: #313131;" text="Choose" textFill="WHITE">
+         <font>
+            <Font name="Bell MT" size="15.0" />
+         </font></Button>
+      <Line endX="-29.999969482421875" endY="25.399993896484375" layoutX="412.0" layoutY="114.0" startX="-29.999969482421875" startY="-1.0" stroke="#ff8b00" />
    </children>
 </AnchorPane>

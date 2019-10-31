@@ -1,4 +1,4 @@
-package ru.mishapan.app.view.firstBranch;
+package ru.mishapan.app.view.search;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -6,14 +6,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Bloom;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import ru.mishapan.app.MainApp;
 
-public class FirstFindOptionController {
+import java.io.File;
+
+public class SearchSettingsController {
 
     /**
      * контроллер, описывающий экран поиска, если известен путь
      */
-    public FirstFindOptionController() {
+    public SearchSettingsController() {
     }
 
     @FXML
@@ -26,8 +30,12 @@ public class FirstFindOptionController {
     private Button searchButton;
     @FXML
     private Button backButton;
+    @FXML
+    private Button directoryButton;
 
     private MainApp mainApp;
+
+    private final DirectoryChooser directoryChooser = new DirectoryChooser();
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
@@ -51,6 +59,26 @@ public class FirstFindOptionController {
             sb.append(symbol);
         }
         return sb.toString();
+    }
+
+    /**
+     * Открывает диалог выбора папки через файловую систему
+     */
+    @FXML
+    private void directoryButtonHandler() {
+
+        Stage primaryStage = mainApp.getPrimaryStage();
+        File dir = directoryChooser.showDialog(primaryStage);
+
+        if (dir != null) {
+            pathTextField.setText(dir.getAbsolutePath());
+        }
+        else {
+            pathTextField.setText(null);
+        }
+
+        primaryStage.setTitle("Choose directory");
+        primaryStage.show();
     }
 
     @FXML
@@ -95,6 +123,17 @@ public class FirstFindOptionController {
         backButton.setEffect(null);
     }
 
+    @FXML
+    private void onMouseEnteredDirectoryButton() {
+        Bloom bloom = new Bloom();
+        directoryButton.setEffect(bloom);
+    }
+
+    @FXML
+    private void onMouseExitedDirectoryButton() {
+        directoryButton.setEffect(null);
+    }
+
     /**
      * При нажатие на кнопку поиск, производится проверка поля путь на пустоту, затем запускается новая сцена
      * с результатами поиска
@@ -110,7 +149,7 @@ public class FirstFindOptionController {
             alert.showAndWait();
             return;
         }
-        mainApp.showFileFinderByPathResultScreen(getPathTextField(), getFileExtensionFiend(), getTextToSearchArea());
+        mainApp.showSearchResultScreen(getPathTextField(), getFileExtensionFiend(), getTextToSearchArea());
     }
 
     @FXML
