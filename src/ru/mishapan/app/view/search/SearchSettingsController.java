@@ -12,11 +12,11 @@ import ru.mishapan.app.MainApp;
 
 import java.io.File;
 
+/**
+ * контроллер, описывающий экран поиска
+ */
 public class SearchSettingsController {
 
-    /**
-     * контроллер, описывающий экран поиска, если известен путь
-     */
     public SearchSettingsController() {
     }
 
@@ -72,8 +72,7 @@ public class SearchSettingsController {
 
         if (dir != null) {
             pathTextField.setText(dir.getAbsolutePath());
-        }
-        else {
+        } else {
             pathTextField.setText(null);
         }
 
@@ -137,19 +136,24 @@ public class SearchSettingsController {
     /**
      * При нажатие на кнопку поиск, производится проверка поля путь на пустоту, затем запускается новая сцена
      * с результатами поиска
+     * Выводит предупреждающее окно, если данные для поиска введены неправильно
      */
     @FXML
     private void buttonSearchHandler() {
 
-        if (getPathTextField().equals("")) {
+        try {
+            if (getPathTextField().equals("")) {
+                throw new IllegalArgumentException("Path to folder can't be empty");
+            }
+            mainApp.snowSearchResultScreen(getPathTextField(), getFileExtensionFiend(), getTextToSearchArea());
+
+        } catch (Exception ex) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning Alert");
             alert.setHeaderText(null);
-            alert.setContentText("Path can't be empty");
+            alert.setContentText(ex.getMessage());
             alert.showAndWait();
-            return;
         }
-        mainApp.showSearchResultScreen(getPathTextField(), getFileExtensionFiend(), getTextToSearchArea());
     }
 
     @FXML

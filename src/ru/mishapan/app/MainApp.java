@@ -2,25 +2,24 @@ package ru.mishapan.app;
 
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ru.mishapan.app.model.directory.DirectoryTreeCreator;
 import ru.mishapan.app.model.file.FileWorker;
 import ru.mishapan.app.view.StartScreenController;
-import ru.mishapan.app.view.search.SearchSettingsController;
+import ru.mishapan.app.view.search.OpenedFileController;
 import ru.mishapan.app.view.search.SearchResultController;
+import ru.mishapan.app.view.search.SearchSettingsController;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Главный класс приложения
@@ -83,74 +82,121 @@ public class MainApp extends Application {
 
     /**
      * Производит поиск файлов по заданному пути, затем поиск среди этих файлов файлов с заданным текстом
-     * Показывает экран результата поиска при известном пути
+     * Добавляет пути к найденным файлам в контроллер
+     * Добавляет фукнцию открытия файлов в новой вкладке по щелчку
+     *
+     * @param path       путь к папке, в которой будет производится поиск файлов с заданным расширением
+     * @param extension  расширение
+     * @param text       текст поиска
+     * @param controller контроллер страницы, на которой выводится результат поиска
+     * @throws Exception при ошибках поиска
+     */
+    public void prepareSearchResultScreen(String path, String extension, String text,
+                                          SearchResultController controller) throws Exception {
+
+        FileWorker fileWorker = new FileWorker();
+
+        List<Path> files = fileWorker.findTextInFiles(fileWorker.findFiles(Paths.get(path), extension), text);
+
+        DirectoryTreeCreator treeCreator = new DirectoryTreeCreator();
+        StringBuilder sb1 = new StringBuilder();
+        int count = 1;
+        String[] folders = treeCreator.createTree(Paths.get(path));
+        for (String folder : folders) {
+            sb1.append(folder);
+            if (count == folders.length) {
+                break;
+            }
+
+            sb1.append("\n").append("   ".repeat(count));
+            count++;
+        }
+
+        controller.setFiles(files);
+        controller.setFilesTextFlow();
+        controller.setTreeFlow(sb1.toString());
+        controller.setMainApp(this);
+
+        for (Label label : controller.getLabels()) {
+            label.setOnMouseClicked(event -> {
+                for (Path path1 : controller.getFiles()) {
+                    if (path1.getFileName().toString().equals(label.getText())) {
+                        controller.openFileTab(path1, fileWorker.getLinesWithMatchesMap());
+                        break;
+                    }
+                }
+            });
+        }
+
+    }
+
+    /**
+     * Загружает страницу, отражающую результат поиска, помещает ее в новую вкладку на панели вкладок
+     * Вывызвает метод, подготавливающий данные к отображению
+     * Выводит стрицу с результатами поиска
      *
      * @param path      путь к папке, в которой будет производится поиск файлов с заданным расширением
      * @param extension расширение
      * @param text      текст поиска
+     * @throws Exception при ошибках поиска
      */
-    public void showSearchResultScreen(String path, String extension, String text) {
+    public void snowSearchResultScreen(String path, String extension, String text) throws Exception {
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApp.class.getResource("view/search/SearchResult.fxml"));
+        AnchorPane anchorPane = loader.load();
+
+        Stage resultStage = new Stage();
+        resultStage.setTitle("Finding results");
+
+        SearchResultController controller = loader.getController();
+
+        prepareSearchResultScreen(path, extension, text, controller);
+
+        Tab tab = new Tab("Home");
+        tab.setContent(anchorPane);
+        tab.setClosable(false);
+        tab.setStyle("-fx-background-color: #cccccc");
+        controller.getTabPane().getTabs().add(tab);
+
+        AnchorPane tabScreen = new AnchorPane(controller.getTabPane());
+
+        Scene scene = new Scene(tabScreen);
+        resultStage.setScene(scene);
+        resultStage.showAndWait();
+    }
+
+    /**
+     * Показывает страницу, откажающую открытый файл
+     * Страница открывается в новой вкладке
+     *
+     * @param filePath               путь к файлу, который необходимо открыть
+     * @param map                    коллекция, содержащая пути к  файлам с найденным текстом и номера строк,
+     *                               в которых был найден текст
+     * @param searchResultController контроллер, в котором располежен TabPane
+     */
+    public void showOpenedFileScreen(Path filePath, Map<String, List<Integer>> map,
+                                     SearchResultController searchResultController) {
+
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/search/SearchResult.fxml"));
+            loader.setLocation(MainApp.class.getResource("view/search/OpenedFile.fxml"));
             AnchorPane anchorPane = loader.load();
 
-            Stage resultStage = new Stage();
-            resultStage.setTitle("Finding results");
-            resultStage.initModality(Modality.WINDOW_MODAL);
-            resultStage.initOwner(primaryStage);
+            OpenedFileController controller = loader.getController();
+            controller.setFilePath(filePath);
+            controller.setLinesWithMatchesMap(map);
+            controller.setFileTextFlow();
+            controller.setPageTextFlow();
 
-            Scene scene = new Scene(anchorPane);
-            resultStage.setScene(scene);
+            Tab tab = new Tab(filePath.getFileName().toString());
+            tab.setContent(anchorPane);
+            tab.setStyle("-fx-background-color: #cccccc");
 
-
-            FileWorker fileWorker = new FileWorker();
-            List<Path> files;
-
-            try {
-                files = fileWorker.findTextInFiles(fileWorker.findFiles(Paths.get(path), extension), text);
-
-            } catch (Exception ex) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning Alert");
-                alert.setHeaderText(null);
-                alert.setContentText(ex.getMessage());
-                alert.showAndWait();
-                return;
-            }
-
-            DirectoryTreeCreator treeCreator = new DirectoryTreeCreator();
-            StringBuilder sb1 = new StringBuilder();
-            int count = 1;
-            String[] folders = treeCreator.createTree(Paths.get(path));
-            for (String folder : folders) {
-                sb1.append(folder);
-                if (count == folders.length) {
-                    break;
-                }
-
-                sb1.append("\n").append("   ".repeat(count));
-                count++;
-            }
-
-            SearchResultController controller = loader.getController();
-            controller.setFiles(files);
-            controller.setTextFlow();
-            controller.setTreeFlow(sb1.toString());
-
-            for (Label label : controller.getLabels()){
-                label.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        controller.openFile(Paths.get(label.getText()));
-                    }
-                });
-            }
-
-            resultStage.showAndWait();
+            searchResultController.getTabPane().getTabs().add(tab);
 
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
