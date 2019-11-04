@@ -2,23 +2,39 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DisplacementMap?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.FloatMap?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="706.0" style="-fx-background-color: #202020;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mishapan.app.view.StartScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="706.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mishapan.app.view.StartScreenController">
    <children>
-      <Button fx:id="GetStartedButton" layoutX="1.0" layoutY="181.0" mnemonicParsing="false" onAction="#handleGetStartedButton" onMouseEntered="#onMouseEnteredLeftButton" onMouseExited="#onMouseExitedLeftButton" prefHeight="287.0" prefWidth="705.0" style="-fx-background-color: #282828; -fx-text-fill: #5A5A5A;" text="Get Started">
+      <Button fx:id="GetStartedButton" layoutX="1.0" layoutY="181.0" mnemonicParsing="false" onAction="#handleGetStartedButton" onMouseEntered="#onMouseEnteredLeftButton" onMouseExited="#onMouseExitedLeftButton" prefHeight="287.0" prefWidth="631.0" style="-fx-background-color: #202020; -fx-text-fill: #5A5A5A;" text="Get Started">
          <font>
             <Font name="Century Gothic" size="24.0" />
          </font>
       </Button>
-      <Label layoutX="95.0" layoutY="48.0" prefHeight="74.0" prefWidth="549.0" text="Hello, welcome to Text Finder!" textFill="#bdbaba">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1414149f" height="294.0" layoutX="613.0" layoutY="175.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="20.0">
+         <effect>
+            <DisplacementMap>
+               <mapData>
+                  <FloatMap />
+               </mapData>
+            </DisplacementMap>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#151515" height="181.0" layoutX="1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="706.0">
+         <effect>
+            <DropShadow />
+         </effect>
+      </Rectangle>
+      <Label layoutX="95.0" layoutY="55.0" prefHeight="74.0" prefWidth="549.0" text="Hello, welcome to Text Finder!" textFill="#bdbaba">
          <font>
             <Font name="Century Gothic" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="157.0" prefHeight="24.0" prefWidth="37.0" text="About" textFill="#e5e1e1" />
-      <Line endX="600.3999633789062" fill="#ffa600" layoutX="105.0" layoutY="181.0" startX="-103.99998474121094" stroke="#ffa72d" />
+      <Label fx:id="label" layoutX="14.0" layoutY="157.0" onMouseClicked="#setOnMouseClicked" onMouseEntered="#setOnMouseEnteredLabel" onMouseExited="#setOnMouseExitedLabel" prefHeight="24.0" prefWidth="50.0" text="Tutorial" textFill="#e5e1e1" />
    </children>
 </AnchorPane>

@@ -30,7 +30,7 @@ public class FileWorker {
      */
     public List<Path> findFiles(Path path, String extension) throws IOException {
 
-        if (extension == null) {
+        if (extension.isBlank()) {
             extension = "*.*";
         }
 
@@ -56,7 +56,7 @@ public class FileWorker {
             throw new IllegalArgumentException("No satisfying files in current directory!");
         }
 
-        if (text.equals("")) {
+        if (text.isBlank()) {
             return filesList;
         }
 
@@ -86,7 +86,8 @@ public class FileWorker {
                     linesWithMatchesMap.put(path.toString(), linesWithMatches);
                 }
 
-            } catch (Exception ex) {
+            } catch (IOException ex) {
+                System.out.println("Can't read from file because of exception: " + ex.getMessage());
                 ex.printStackTrace();
             }
         });

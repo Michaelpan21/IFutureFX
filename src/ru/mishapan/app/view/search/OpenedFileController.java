@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Bloom;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -159,23 +160,21 @@ public class OpenedFileController {
 
     @FXML
     private void onMouseEnteredPreviousButton() {
-        Bloom bloom = new Bloom();
-        previousButton.setEffect(bloom);
+        previousButton.setEffect(new Bloom());
     }
 
     @FXML
     private void onMouseExitedPreviousButton() {
-        previousButton.setEffect(null);
+        previousButton.setEffect(new DropShadow());
     }
 
     @FXML
     private void onMouseEnteredNextButton() {
-        Bloom bloom = new Bloom();
-        nextButton.setEffect(bloom);
+        nextButton.setEffect(new Bloom());
     }
 
     @FXML
     private void onMouseExitedNextButton() {
-        nextButton.setEffect(null);
+        nextButton.setEffect(new DropShadow());
     }
 }

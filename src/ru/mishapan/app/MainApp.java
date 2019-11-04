@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ru.mishapan.app.model.directory.DirectoryTreeCreator;
 import ru.mishapan.app.model.file.FileWorker;
@@ -193,11 +194,30 @@ public class MainApp extends Application {
             tab.setStyle("-fx-background-color: #cccccc");
 
             searchResultController.getTabPane().getTabs().add(tab);
-
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
+
+    public void showTutorialScreen() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/Tutorial.fxml"));
+            AnchorPane anchorPane = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("How to");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+
+            Scene scene = new Scene(anchorPane);
+            dialogStage.setScene(scene);
+            dialogStage.showAndWait();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
     public Stage getPrimaryStage() {
         return primaryStage;

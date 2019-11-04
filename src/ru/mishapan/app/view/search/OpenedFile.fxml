@@ -12,9 +12,9 @@
 
 <AnchorPane cache="true" prefHeight="601.0" prefWidth="850.0" style="-fx-background-color: #202020;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mishapan.app.view.search.OpenedFileController">
    <children>
-      <ScrollPane hbarPolicy="NEVER" layoutX="20.0" layoutY="81.0" prefHeight="467.0" prefWidth="682.0" style="-fx-background-color: #535353; -fx-border-color: #535353;" vbarPolicy="NEVER">
+      <ScrollPane hbarPolicy="NEVER" layoutX="20.0" layoutY="81.0" prefHeight="467.0" prefWidth="682.0" style="-fx-background-color: #303030; -fx-border-color: #303030;" vbarPolicy="NEVER">
          <content>
-            <TextFlow fx:id="fileTextFlow" lineSpacing="2.0" prefHeight="465.0" prefWidth="682.0" style="-fx-background-color: #535353;">
+            <TextFlow fx:id="fileTextFlow" lineSpacing="2.0" prefHeight="465.0" prefWidth="682.0" style="-fx-background-color: #303030;">
                <padding>
                   <Insets left="2.0" />
                </padding>
@@ -37,9 +37,9 @@
             <Font name="Century Gothic Bold Italic" size="16.0" />
          </font>
       </Label>
-      <ScrollPane hbarPolicy="NEVER" layoutX="730.0" layoutY="81.0" prefHeight="467.0" prefWidth="91.0" style="-fx-background-color: #535353; -fx-border-color: #535353;" vbarPolicy="NEVER">
+      <ScrollPane hbarPolicy="NEVER" layoutX="730.0" layoutY="81.0" prefHeight="467.0" prefWidth="91.0" style="-fx-background-color: #303030; -fx-border-color: #303030;" vbarPolicy="NEVER">
          <content>
-            <TextFlow fx:id="pageTextFlow" lineSpacing="2.0" prefHeight="469.0" prefWidth="684.0" style="-fx-background-color: #535353;">
+            <TextFlow fx:id="pageTextFlow" lineSpacing="2.0" prefHeight="469.0" prefWidth="684.0" style="-fx-background-color: #303030;">
                <padding>
                   <Insets left="2.0" />
                </padding>

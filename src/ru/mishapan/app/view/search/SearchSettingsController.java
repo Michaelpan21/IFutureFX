@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Bloom;
+import javafx.scene.effect.DropShadow;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import ru.mishapan.app.MainApp;
@@ -82,39 +83,37 @@ public class SearchSettingsController {
 
     @FXML
     private void onMouseEnteredTextField1() {
-        pathTextField.setStyle("-fx-background-color: #313131; -fx-text-fill: #ffffff");
+        pathTextField.setEffect(new DropShadow());
     }
 
     @FXML
     private void onMouseExitedTextField1() {
-        pathTextField.setStyle("-fx-background-color: #535353; -fx-text-fill: #cccccc");
+        pathTextField.setEffect(null);
     }
 
     @FXML
     private void onMouseEnteredTextField2() {
-        fileExtensionFiend.setStyle("-fx-background-color: #313131; -fx-text-fill: #ffffff");
+        fileExtensionFiend.setEffect(new DropShadow());
     }
 
     @FXML
     private void onMouseExitedTextField2() {
-        fileExtensionFiend.setStyle("-fx-background-color: #535353; -fx-text-fill: #cccccc");
+        fileExtensionFiend.setEffect(null);
     }
 
     @FXML
     private void onMouseEnteredSearchButton() {
-        Bloom bloom = new Bloom();
-        searchButton.setEffect(bloom);
+        searchButton.setEffect(new Bloom());
     }
 
     @FXML
     private void onMouseExitedSearchButton() {
-        searchButton.setEffect(null);
+        searchButton.setEffect(new DropShadow());
     }
 
     @FXML
     private void onMouseEnteredBackButton() {
-        Bloom bloom = new Bloom();
-        backButton.setEffect(bloom);
+        backButton.setEffect(new Bloom());
     }
 
     @FXML
@@ -124,13 +123,12 @@ public class SearchSettingsController {
 
     @FXML
     private void onMouseEnteredDirectoryButton() {
-        Bloom bloom = new Bloom();
-        directoryButton.setEffect(bloom);
+        directoryButton.setEffect(new Bloom());
     }
 
     @FXML
     private void onMouseExitedDirectoryButton() {
-        directoryButton.setEffect(null);
+        directoryButton.setEffect(new DropShadow());
     }
 
     /**

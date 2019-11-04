@@ -2,7 +2,9 @@ package ru.mishapan.app.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Bloom;
+import javafx.scene.paint.Color;
 import ru.mishapan.app.MainApp;
 
 /**
@@ -15,6 +17,9 @@ public class StartScreenController {
 
     @FXML
     Button GetStartedButton;
+
+    @FXML
+    private Label label;
 
     private MainApp mainApp;
 
@@ -38,6 +43,21 @@ public class StartScreenController {
     private void onMouseExitedLeftButton() {
         GetStartedButton.setEffect(null);
         GetStartedButton.setStyle("-fx-background-color: #282828; -fx-text-fill: #5A5A5A");
+    }
+
+    @FXML
+    private void setOnMouseEnteredLabel() {
+        label.setTextFill(Color.web("#ff7b00"));
+    }
+
+    @FXML
+    private void setOnMouseExitedLabel() {
+        label.setTextFill(Color.web("#ffffff"));
+    }
+
+    @FXML
+    private void setOnMouseClicked() {
+        mainApp.showTutorialScreen();
     }
 
 }
