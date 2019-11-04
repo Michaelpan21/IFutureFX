@@ -59,5 +59,4 @@ public class StartScreenController {
     private void setOnMouseClicked() {
         mainApp.showTutorialScreen();
     }
-
 }
